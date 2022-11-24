@@ -4,6 +4,7 @@ require("express-async-errors");
 const express = require("express");
 const app = express();
 
+const fileUpload = require("express-fileupload");
 // database
 const connectDB = require("./db/connect");
 // product router
@@ -12,7 +13,10 @@ const productRouter = require("./routes/productRoutes");
 const notFoundMiddleware = require("./middleware/not-found");
 const errorHandlerMiddleware = require("./middleware/error-handler");
 
+app.use(express.static(".public"));
 app.use(express.json()); // invoking this gives us access in the req.body.
+app.use(fileUpload()); // invoking this gives us  access to the files from the req.body.
+
 app.get("/", (req, res) => {
   res.send("<h1>File Upload Starter</h1>");
 });
