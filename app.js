@@ -5,6 +5,14 @@ const express = require("express");
 const app = express();
 
 const fileUpload = require("express-fileupload");
+// always use v2
+const cloudinary = require("cloudinary").v2;
+// cloudinary configuration.
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET,
+});
 // database
 const connectDB = require("./db/connect");
 // product router
@@ -13,9 +21,9 @@ const productRouter = require("./routes/productRoutes");
 const notFoundMiddleware = require("./middleware/not-found");
 const errorHandlerMiddleware = require("./middleware/error-handler");
 
-app.use(express.static("./public"));
-app.use(express.json()); // invoking this gives us access in the req.body.
-app.use(fileUpload()); // invoking this gives us  access to the files from the req.body.
+app.use(express.static("./public")); // give us access public contents.
+app.use(express.json()); // invoking this gives us access to the json in the req.body.
+app.use(fileUpload({ useTempFiles: true })); // invoking this gives us  access to the files from the req.body.
 
 app.get("/", (req, res) => {
   res.send("<h1>File Upload Starter</h1>");
