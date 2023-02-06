@@ -6,10 +6,12 @@ const {
   getAllProduct,
 } = require("../controllers/productController");
 
-const { uploadProductImage } = require("../controllers/uploadsController");
+const {
+  uploadProductImage,
+  uploadImageToDigitalOcean,
+} = require("../controllers/uploadsController");
 
 router.route("/").post(createProduct).get(getAllProduct);
-router.route("/uploads").post(uploadProductImage);
+router.route("/uploads").post(uploadImageToDigitalOcean);
 
 module.exports = router;
- 

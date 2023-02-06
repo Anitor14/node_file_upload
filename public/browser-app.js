@@ -50,9 +50,11 @@ fileFormDOM.addEventListener("submit", async (e) => {
 
 async function fetchProducts() {
   try {
+    const fetchData = await axios.get(url);
+    console.log(fetchData.data);
     const {
       data: { products },
-    } = await axios.get(url);
+    } = fetchData;
 
     const productsDOM = products
       .map((product) => {

@@ -4,6 +4,9 @@ require("express-async-errors");
 const express = require("express");
 const app = express();
 
+const AWS = require("aws-sdk");
+const fs = require("fs");
+
 const fileUpload = require("express-fileupload");
 // always use v2
 const cloudinary = require("cloudinary").v2;
@@ -34,7 +37,7 @@ app.use("/api/v1/products", productRouter);
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
 const start = async () => {
   try {

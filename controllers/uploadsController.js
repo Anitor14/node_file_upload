@@ -3,6 +3,7 @@ const { StatusCodes } = require("http-status-codes");
 const CustomError = require("../errors");
 const cloudinary = require("cloudinary").v2;
 const fs = require("fs");
+require("dotenv").config();
 
 const uploadProductImageLocal = async (req, res) => {
   // check size
@@ -41,13 +42,20 @@ const uploadProductImage = async (req, res) => {
     req.files.image.tempFilePath,
     {
       use_filename: true,
-      folder: "file-upload",
+      folder: "file-upload", // the folder on cloudinary where you want to store the image.
     }
   );
+  console.log(result);
   fs.unlinkSync(req.files.image.tempFilePath);
   // console.log(result);
   return res.status(StatusCodes.OK).json({ image: { src: result.secure_url } });
 };
+
+const uploadImageToDigitalOcean = async (req, res) => {
+  res.send("upload image is working");
+};
+
 module.exports = {
   uploadProductImage,
+  uploadImageToDigitalOcean,
 };
